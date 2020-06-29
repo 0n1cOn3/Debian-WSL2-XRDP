@@ -31,4 +31,5 @@ __Change the port 3389 to 3390__ and save the file with Shift+X and Y and hit tw
 ## IMPORTANT!
 
 Highly recommended to remove the screensavers or your not able to login after Screensaver has started and you have to reboot lxss in Task Manager
+
 __"# sudo apt purge xscreensaver gnome-screensaver light-locker i3lock"__
