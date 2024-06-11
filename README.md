@@ -1,35 +1,48 @@
 # Debian-WSL2-xrdp
-Running KDE Plasma with xrdp over WSL2
-## Entrance of the Guide
+### Running KDE Plasma with xrdp on WSL 2
 
-Do you wanna run Debian on WSL 2 and this with a GUI, so here we are:
-Be sure you have WSL installed.
+This guide will help you set up Debian on WSL 2 with a KDE Plasma GUI, accessed via xrdp. 
+Before you start, ensure that WSL is installed on your system. 
 
-if WSL is not installed, check out here: https://docs.microsoft.com/en-us/windows/wsl/install-win10
+**Note: that this method was developed before Microsoft introduced official GUI support in WSL 2.**
 
-If not already installed, get Debian from the MS-Store: https://aka.ms/wsl-debian-gnulinux
+If WSL is not installed, please follow the instructions [here](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-## Setup Debian
-The first command which we gonna use is to put the $DISPLAY Variable into the bashrc file:
+If you haven't already, install Debian from the Microsoft Store: [Debian WSL](https://aka.ms/wsl-debian-gnulinux).
 
-__*# echo '[ -z $DISPLAY ] && export DISPLAY=127.0.0.1:0.0' >> ~/.bashrc"*__
+### - Setting Up Debian:
 
-Now we have to install dbus-x11 for the important command:
+- Set the DISPLAY Variable:
+Append the following line to your .bashrc file to set the DISPLAY variable:
 
-__*# sudo apt install dbus-x11*__
 
-and execute the command to configure dbus-x11
+```echo '[ -z $DISPLAY ] && export DISPLAY=127.0.0.1:0.0' >> ~/.bashrc```
 
-__*# dbus-launch --exit-with-x11 && sudo dbus-uuidgen --ensure"*__
+- Install dbus-x11:
+Install the dbus-x11 package which is necessary for dbus support:
 
-Now we're almost done... You have just to change on Setting:
+```sudo apt install dbus-x11```
 
-__*# sudo nano /etc/xrdp/rdxp.ini*__
+After installation, configure dbus-x11 with the following commands:
 
-__Change the port 3389 to 3390__ and save the file with Shift+X and Y and hit twice enter.
+```dbus-launch --exit-with-x11	sudo dbus-uuidgen --ensure```
 
-## IMPORTANT!
+### - Configure xrdp:
 
-Highly recommended to remove the screensavers or your not able to login after Screensaver has started and you have to reboot lxss in Task Manager
+Edit the xrdp.ini configuration file to change the default port:
 
-__# sudo apt purge xscreensaver gnome-screensaver light-locker i3lock__
+```sudo nano /etc/xrdp/xrdp.ini```
+
+In the file, locate the line with port=3389 and change it to:
+
+```port=3390```
+
+Save the file by pressing Ctrl+X, then Y, and hit Enter twice.
+
+### - Remove Screensavers:
+It is highly recommended to remove screensavers to avoid issues with login after the screensaver starts. Run the following command to remove them:
+
+```sudo apt purge xscreensaver gnome-screensaver light-locker i3lock```
+
+By following these steps, you should be able to run Debian on WSL 2 with a KDE Plasma GUI accessible via xrdp. 
+If you encounter any issues, you may need to reboot the WSL instance or check the configurations again. 
